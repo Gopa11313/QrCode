@@ -78,49 +78,6 @@ public class UtilsQRCode {
         return tagAndValue;
     }
 
-    public static HashMap<String, String> getUPIDict(String merchantId) {
-        HashMap<String, String> tagAndValue = new HashMap<>();
-        char[] merchantIds = merchantId.toCharArray();
-        for (int i = 0; i < merchantIds.length; ) {
-            if (i + 4 < merchantIds.length) {
-
-                String tag = String.valueOf(merchantIds[i]) + String.valueOf(merchantIds[i + 1]);
-                int length = Integer.parseInt(String.valueOf(merchantIds[i + 2]) + String.valueOf(merchantIds[i + 3]));
-                StringBuilder values = new StringBuilder();
-
-                for (int j = i + 4; j < i + 4 + length; j++) {
-                    values.append(String.valueOf(merchantIds[j]));
-                }
-                tagAndValue.put(tag, values.toString());
-
-                i += 4 + length;
-            }
-        }
-        Log.d("dict", tagAndValue.toString());
-        return tagAndValue;
-    }
-
-    public static HashMap<String, String> getTerminalId(String merchantId) {
-        HashMap<String, String> tagAndValue = new HashMap<>();
-        char[] merchantIds = merchantId.toCharArray();
-        for (int i = 0; i < merchantIds.length; ) {
-            if (i + 4 < merchantIds.length) {
-
-                String tag = String.valueOf(merchantIds[i]) + String.valueOf(merchantIds[i + 1]);
-                int length = Integer.parseInt(String.valueOf(merchantIds[i + 2]) + String.valueOf(merchantIds[i + 3]));
-                StringBuilder values = new StringBuilder();
-
-                for (int j = i + 4; j < i + 4 + length; j++) {
-                    values.append(String.valueOf(merchantIds[j]));
-                }
-                tagAndValue.put(tag, values.toString());
-
-                i += 4 + length;
-            }
-        }
-        return tagAndValue;
-    }
-
 
     public static String crc16(byte[] data) {
         int PRESET_VALUE = 0xFFFF;
@@ -143,45 +100,6 @@ public class UtilsQRCode {
         return Integer.toHexString(current_crc_value & 0xFFFF);
     }
 
-
-    public static List<UPIQR> getUPIData(String merchantId, Context context) {
-        //53 Currency Code
-        //54 Amount
-        //58 Country Code
-        //59 Merchant Name
-        //60 Merchant City
-        //63 checksum
-        System.out.println("id:: " + merchantId);
-        Map<String, String> map = new HashMap<>();
-        List<UPIQR> tagAndValue = new ArrayList<>();
-        char[] merchantIds = merchantId.toCharArray();
-        for (int i = 0; i < merchantIds.length; ) {
-            if (i + 4 < merchantIds.length) {
-
-                String tag = (String.valueOf(merchantIds[i]) + String.valueOf(merchantIds[i + 1]));
-                int length = Integer.parseInt(String.valueOf(merchantIds[i + 2]) + String.valueOf(merchantIds[i + 3]));
-                StringBuilder values = new StringBuilder();
-
-                for (int j = i + 4; j < i + 4 + length; j++) {
-                    System.out.println("value:: " + values + " " + values.length() + " " + values.toString());
-                    values.append(String.valueOf(merchantIds[j]));
-                }
-
-                map.put(tag, values.toString());
-                System.out.println("tag len and value:: " + tag + " " + values.length() + " " + values.toString());
-                if (length <= 9) {
-                    tagAndValue.add(new UPIQR(tag, "0" + length, values.toString()));
-
-                } else {
-                    tagAndValue.add(new UPIQR(tag, "" + length, values.toString()));
-
-                }
-                i += 4 + length;
-            }
-        }
-        savePreference(map, context);
-        return tagAndValue;
-    }
 
 
     public static void savePreference(Map<String, String> map, Context context) {
@@ -296,10 +214,4 @@ public class UtilsQRCode {
         return tempdata + (checksum.length() == 4 ? checksum : "0" + checksum);
     }
 
-    public static void getTerminal_Id(String id, Context context) {
-        map = UtilsQRCode.getUPIDict(id);
-        terminalId = map.get("07");
-//        GetBalance.setTerminalId(terminalId);
-        Log.d("dinesh", "map" + map + "..." + terminalId + "....");
-    }
 }
