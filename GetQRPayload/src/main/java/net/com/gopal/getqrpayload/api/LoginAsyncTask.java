@@ -22,6 +22,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         this.context = context;
         this.response = response;
         this.jsonObject = jsonObject;
+        this.url=url;
     }
 
     @Override
