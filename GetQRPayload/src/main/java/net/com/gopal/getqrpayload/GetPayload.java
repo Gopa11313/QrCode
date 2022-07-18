@@ -29,6 +29,7 @@ public class GetPayload {
                 new GetDymanicQr(context, Constans.MERCHANT_DYANAMIC_QR, amount, token, new GetDymanicQr.Response() {
                     @Override
                     public void onSuccess(String payload) {
+                        dialog.dismiss();
                         Bitmap bitmap = UtilsQRCode.generateQR(payload);
                         imageView.setImageBitmap(bitmap);
                     }
@@ -48,6 +49,7 @@ public class GetPayload {
 
             @Override
             public void onFail() {
+                dialog.dismiss();
                 Toast.makeText(context, "Enable to do transaction", Toast.LENGTH_SHORT).show();
             }
 
