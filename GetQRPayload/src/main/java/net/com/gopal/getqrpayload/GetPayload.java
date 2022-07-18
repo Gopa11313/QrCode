@@ -3,6 +3,7 @@ package net.com.gopal.getqrpayload;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import net.com.gopal.getqrpayload.api.Constans;
@@ -21,20 +22,21 @@ import java.util.Random;
 
 public class GetPayload {
 
-    public static String Payload(Context context, String amount, Dialog dialog) {
-        final String[] payloadData = {""};
+    public static void Payload(Context context, String amount, Dialog dialog, ImageView imageView) {
         new LoginAsyncTask(context, new LoginAsyncTask.Response() {
             @Override
             public void onSuccess(String token) {
-                new GetDymanicQr(context, Constans.MERCHANT_DYANAMIC_QR, amount,token, new GetDymanicQr.Response() {
+                new GetDymanicQr(context, Constans.MERCHANT_DYANAMIC_QR, amount, token, new GetDymanicQr.Response() {
                     @Override
                     public void onSuccess(String payload) {
-                        payloadData[0] = payload;
+                        Bitmap bitmap = UtilsQRCode.generateQR(payload);
+                        imageView.setImageBitmap(bitmap);
                     }
 
                     @Override
                     public void onFail() {
-
+                        Toast.makeText(context, "Enable to do transaction", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
 
                     @Override
@@ -51,10 +53,10 @@ public class GetPayload {
 
             @Override
             public void onProcess() {
-
+                dialog.show();
             }
         }, Constans.LOGIN, reqPrams()).execute();
-        return payloadData[0];
+
     }
 
     private static JSONObject reqPrams() {
