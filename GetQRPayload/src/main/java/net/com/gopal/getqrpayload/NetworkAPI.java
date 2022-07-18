@@ -120,7 +120,7 @@ public class NetworkAPI {
         Date c = Calendar.getInstance().getTime();
         Random random = new Random();
         int x = random.nextInt(50);
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
         String formattedDate = df.format(c);
         FormBody.Builder body = new FormBody.Builder()
                 .addEncoded("merchantId", merchID)
