@@ -42,7 +42,7 @@ public class GetDymanicQr extends AsyncTask<Void, Void, String> {
         try {
             JSONObject jsonObject = new JSONObject(s);
             String payload = jsonObject.getString("Payload");
-            String message = jsonObject.getString("message");
+            String message = jsonObject.getString("Message");
             response.onSuccess(payload);
 
         } catch (Exception e) {
