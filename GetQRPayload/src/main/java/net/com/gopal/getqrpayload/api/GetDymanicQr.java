@@ -28,7 +28,7 @@ public class GetDymanicQr extends AsyncTask<Void, Void, String> {
         try {
             SharedPreferences pref = context.getSharedPreferences("upiqrc", Context.MODE_PRIVATE);
             String token = pref.getString("token", null);
-            response = NetworkAPI.sendHTTPData(url,"","",amount,token);
+            response = NetworkAPI.sendHTTPData(url, "000072497701524", "Q0006998", amount, token);
             Log.d("Gopal", "response : " + response);
         } catch (Exception e) {
             e.printStackTrace();
