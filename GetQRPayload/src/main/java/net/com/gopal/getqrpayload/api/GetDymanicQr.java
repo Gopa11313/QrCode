@@ -12,13 +12,13 @@ import org.json.JSONObject;
 public class GetDymanicQr extends AsyncTask<Void, Void, String> {
     Context context;
     String url;
-    JSONObject jsonObject;
+    String amount;
     Response response;
 
-    public GetDymanicQr(Context context, String url, JSONObject jsonObject, Response response) {
+    public GetDymanicQr(Context context, String url, String amount, Response response) {
         this.context = context;
         this.url = url;
-        this.jsonObject = jsonObject;
+        this.amount = amount;
         this.response = response;
     }
 
@@ -28,7 +28,7 @@ public class GetDymanicQr extends AsyncTask<Void, Void, String> {
         try {
             SharedPreferences pref = context.getSharedPreferences("upiqrc", Context.MODE_PRIVATE);
             String token = pref.getString("token", null);
-            response = NetworkAPI.sendHTTPData(url);
+            response = NetworkAPI.sendHTTPData(url,"","",amount,token);
             Log.d("Gopal", "response : " + response);
         } catch (Exception e) {
             e.printStackTrace();

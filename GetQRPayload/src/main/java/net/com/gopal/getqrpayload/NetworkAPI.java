@@ -6,6 +6,11 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -93,7 +98,6 @@ public class NetworkAPI {
                 .post(body.build())
                 .build();
 
-
 //        Request.Builder request = new Request.Builder()
 //                .addHeader("Authorization", token)
 //                .url(urlpath)
@@ -103,7 +107,7 @@ public class NetworkAPI {
         return response.body().string();
 
     }
-    public static String sendHTTPData(String urlpath, JSONObject json) throws Exception {
+    public static String sendHTTPData(String urlpath, String merchID,String termID,String amount,String token) throws Exception {
         String TAG = "dinesh";
         MediaType JSON
                 = MediaType.parse("multipart/form-data");
@@ -113,11 +117,21 @@ public class NetworkAPI {
                 .writeTimeout(180, TimeUnit.SECONDS)
                 .readTimeout(180, TimeUnit.SECONDS)
                 .build();
-
-        RequestBody body = RequestBody.create(JSON, json.toString());
+        Date c = Calendar.getInstance().getTime();
+        Random random = new Random();
+        int x = random.nextInt(50);
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String formattedDate = df.format(c);
+        FormBody.Builder body = new FormBody.Builder()
+                .addEncoded("merchantId", merchID)
+                .addEncoded("termId", termID)
+                .addEncoded("payType", "UPI")
+                .addEncoded("invoiceNo", formattedDate + x)
+                .addEncoded("amount", amount);
         Request request = new Request.Builder()
                 .url(urlpath)
-                .post(body)
+                .post(body.build())
+                .addHeader("token",token)
                 .build();
         Response response = client.newCall(request).execute();
         return response.body().string();

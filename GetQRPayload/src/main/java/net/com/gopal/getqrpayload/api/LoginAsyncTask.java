@@ -22,7 +22,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         this.context = context;
         this.response = response;
         this.jsonObject = jsonObject;
-        this.url=url;
+        this.url = url;
     }
 
     @Override
@@ -43,7 +43,6 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             JSONObject jsonObject = new JSONObject(s);
             String token = jsonObject.getString("access_token");
-            String message = jsonObject.getString("message");
             SharedPreferences pref = context.getSharedPreferences("upiqrc", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("token", "bearer " + token);
@@ -60,8 +59,10 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         void onSuccess();
 
         void onFail();
+
         void onProcess();
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
