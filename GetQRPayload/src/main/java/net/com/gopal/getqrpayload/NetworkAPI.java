@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -68,7 +69,7 @@ public class NetworkAPI {
         return result;
     }
 
-    public static String sendHTTPData(String urlpath, JSONObject json,String token) throws Exception {
+    public static String sendHTTPData(String urlpath) throws Exception {
 
 
         String TAG = "gopal";
@@ -81,14 +82,23 @@ public class NetworkAPI {
                 .readTimeout(180, TimeUnit.SECONDS)
                 .build();
 
-        RequestBody body = RequestBody.create(JSON, json.toString());
-
+        FormBody.Builder body = new FormBody.Builder()
+                .addEncoded("grant_type","password")
+                .addEncoded("username","bonfire")
+                .addEncoded("password","bonfire@123");
         System.out.println("url" + urlpath);
+
         Request request = new Request.Builder()
-                .addHeader("Authorization", token)
                 .url(urlpath)
-                .post(body)
+                .post(body.build())
                 .build();
+
+
+//        Request.Builder request = new Request.Builder()
+//                .addHeader("Authorization", token)
+//                .url(urlpath)
+//                .post(body)
+//                .build();
         Response response = client.newCall(request).execute();
         return response.body().string();
 

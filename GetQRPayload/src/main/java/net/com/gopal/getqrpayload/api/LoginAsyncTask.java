@@ -29,7 +29,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... voids) {
         String response = null;
         try {
-            response = NetworkAPI.sendHTTPData(url, jsonObject);
+            response = NetworkAPI.sendHTTPData(url);
             Log.d("Gopal", "response : " + response);
         } catch (Exception e) {
             e.printStackTrace();
