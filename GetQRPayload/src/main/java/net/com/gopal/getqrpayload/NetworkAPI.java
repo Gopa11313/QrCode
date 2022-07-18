@@ -96,7 +96,7 @@ public class NetworkAPI {
     public static String sendHTTPData(String urlpath, JSONObject json) throws Exception {
         String TAG = "dinesh";
         MediaType JSON
-                = MediaType.parse("application/json; charset=utf-8");
+                = MediaType.parse("multipart/form-data");
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(180, TimeUnit.SECONDS)
