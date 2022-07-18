@@ -14,20 +14,20 @@ public class GetDymanicQr extends AsyncTask<Void, Void, String> {
     String url;
     String amount;
     Response response;
+    String token;
 
-    public GetDymanicQr(Context context, String url, String amount, Response response) {
+    public GetDymanicQr(Context context, String url, String amount,String token, Response response) {
         this.context = context;
         this.url = url;
         this.amount = amount;
         this.response = response;
+        this.token=token;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         String response = null;
         try {
-            SharedPreferences pref = context.getSharedPreferences("upiqrc", Context.MODE_PRIVATE);
-            String token = pref.getString("token", null);
             response = NetworkAPI.sendHTTPData(url, "000072497701524", "Q0006998", amount, token);
             Log.d("Gopal", "response : " + response);
         } catch (Exception e) {

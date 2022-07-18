@@ -43,10 +43,8 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             JSONObject jsonObject = new JSONObject(s);
             String token = jsonObject.getString("access_token");
-            SharedPreferences pref = context.getSharedPreferences("upiqrc", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("token", "bearer " + token);
-            response.onSuccess();
+            token = "bearer " + token;
+            response.onSuccess(token);
 
 
         } catch (Exception e) {
@@ -56,7 +54,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
     }
 
     public interface Response {
-        void onSuccess();
+        void onSuccess(String token);
 
         void onFail();
 

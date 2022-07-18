@@ -25,8 +25,8 @@ public class GetPayload {
         final String[] payloadData = {""};
         new LoginAsyncTask(context, new LoginAsyncTask.Response() {
             @Override
-            public void onSuccess() {
-                new GetDymanicQr(context, Constans.MERCHANT_DYANAMIC_QR, amount, new GetDymanicQr.Response() {
+            public void onSuccess(String token) {
+                new GetDymanicQr(context, Constans.MERCHANT_DYANAMIC_QR, amount,token, new GetDymanicQr.Response() {
                     @Override
                     public void onSuccess(String payload) {
                         payloadData[0] = payload;

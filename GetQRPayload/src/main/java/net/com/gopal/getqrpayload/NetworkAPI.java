@@ -131,7 +131,7 @@ public class NetworkAPI {
         Request request = new Request.Builder()
                 .url(urlpath)
                 .post(body.build())
-                .addHeader("token",token)
+                .addHeader("Authorization",token)
                 .build();
         Response response = client.newCall(request).execute();
         return response.body().string();
